@@ -90,18 +90,18 @@ namespace Maze
 				}
 			}
 
-			if (isDispatching) {
-				while (moves.Count > 0) {
-					Vector3 move = (Vector3)moves.Dequeue ();
-
-					player.transform.Translate (move);
-
-					// Current pos
-//					Vector3 currPos = player.transform.position;
-//					Vector3 targetPos = currPos + move;
-//					player.transform.position = targetPos;
-				}
-			}
+//			if (isDispatching) {
+//				while (moves.Count > 0) {
+//					Vector3 move = (Vector3)moves.Dequeue ();
+//
+//					player.transform.Translate (move);
+//
+//					// Current pos
+////					Vector3 currPos = player.transform.position;
+////					Vector3 targetPos = currPos + move;
+////					player.transform.position = targetPos;
+//				}
+//			}
 		}
 
 		void StartRecording ()

@@ -17,14 +17,14 @@ public class Wall : MonoBehaviour
 		
 	}
 
-	//	void OnTriggerEnter (Collider otherObject)
-	//	{
-	//		if (otherObject.gameObject.CompareTag ("Player"))
-	//		{
-	//			Vector3 newPosition = otherObject.gameObject.transform.position;
-	//			newPosition = new Vector3 (10, 10, 10);
-	//			otherObject.gameObject.transform.position = newPosition;
-	//		}
-	//	}
+	void OnTriggerEnter (Collider otherObject)
+	{
+		if (otherObject.gameObject.CompareTag ("Player")) {
+//			Vector3 newPosition = otherObject.gameObject.transform.position;
+//			newPosition = new Vector3 (10, 10, 10);
+//			otherObject.gameObject.transform.position = newPosition;
+			Destroy (otherObject.gameObject);
+		}
+	}
 
 }
