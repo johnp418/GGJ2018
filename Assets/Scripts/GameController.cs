@@ -18,10 +18,10 @@ namespace Maze
 
 
 		private Dictionary<KeyCode, Vector3> keyDict = new Dictionary<KeyCode, Vector3> () {
-			{ KeyCode.LeftArrow, Vector3.right },
-			{ KeyCode.RightArrow, Vector3.left },
-			{ KeyCode.DownArrow, Vector3.forward },
-			{ KeyCode.UpArrow, Vector3.back }
+			{ KeyCode.LeftArrow, Vector3.left },
+			{ KeyCode.RightArrow, Vector3.right },
+			{ KeyCode.DownArrow, Vector3.back },
+			{ KeyCode.UpArrow, Vector3.forward }
 		};
 
 
@@ -80,27 +80,28 @@ namespace Maze
 		{
 //			print (string.Format ("isListening {0}", isListeningEvent));
 
-//			if (isListeningEvent) {
-//				foreach (KeyCode keyToCheck in desiredKeys) {
-//					if (Input.GetKeyUp (keyToCheck)) {
-//						print (string.Format ("Key Clicked {0}", keyToCheck.ToString ()));
-//						Vector3 moveVector = keyDict [keyToCheck];
-//						moves.Enqueue (moveVector);
-//					}				
-//				}
-//			}
-//
-//			if (isDispatching) {
-//				while (moves.Count > 0) {
-//					Vector3 move = (Vector3)moves.Dequeue ();
-//
-//					// Current pos
+			if (isListeningEvent) {
+				foreach (KeyCode keyToCheck in desiredKeys) {
+					if (Input.GetKeyUp (keyToCheck)) {
+						print (string.Format ("Key Clicked {0}", keyToCheck.ToString ()));
+						Vector3 moveVector = keyDict [keyToCheck];
+						moves.Enqueue (moveVector);
+					}				
+				}
+			}
+
+			if (isDispatching) {
+				while (moves.Count > 0) {
+					Vector3 move = (Vector3)moves.Dequeue ();
+
+					player.transform.Translate (move);
+
+					// Current pos
 //					Vector3 currPos = player.transform.position;
 //					Vector3 targetPos = currPos + move;
-//					player.transform.position = Vector3.SmoothDamp (currPos, targetPos, ref velocity, smoothTime);
-//
-//				}
-//			}
+//					player.transform.position = targetPos;
+				}
+			}
 		}
 
 		void StartRecording ()
