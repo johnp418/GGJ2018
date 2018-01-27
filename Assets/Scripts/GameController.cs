@@ -6,7 +6,7 @@ namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
-		private int waitTime = 5;
+		private int waitTime = 10;
 		private float movespeed = 5;
 		private Queue moves = null;
 		private bool isListeningEvent = false;
@@ -46,6 +46,9 @@ namespace Maze
 		{
 			// Let user remember the layout of the maze for "waitTime"
 			yield return new WaitForSecondsRealtime (waitTime);
+
+			// Cover the maze while user presses arrow keys 
+
 
 			// Code below runs after "waitTime"
 
