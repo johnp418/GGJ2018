@@ -7,7 +7,7 @@ namespace Maze
 	public class GameController : MonoBehaviour
 	{
 		private int waitTime = 5;
-		private float moveSpeed = 5;
+		private float movespeed = 5;
 		private Queue moves = null;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
@@ -39,20 +39,31 @@ namespace Maze
 
 			StartCoroutine (waitForUserInput ());
 			print ("Started coroutine");
-			StartRecording ();
 		}
 
 
 		IEnumerator waitForUserInput ()
 		{
+			// Let user remember the layout of the maze for "waitTime"
 			yield return new WaitForSecondsRealtime (waitTime);
 
 			// Code below runs after "waitTime"
-			isListeningEvent = false;
+
+			StartRecording ();
+
+
+			yield return new WaitForSecondsRealtime (5);
 
 			print (string.Format (" Number of moves = {0}", moves.Count));
 
+			isListeningEvent = false;
 			isDispatching = true;
+
+
+			print (" Hello Start ");
+
+
+
 		}
 			
 
