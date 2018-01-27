@@ -6,16 +6,17 @@ namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
-
+		private int waitTime = 5;
+		private float moveSpeed = 5;
+		private Queue moves = null;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
-		private Queue moves = null;
+
+		GameObject player;
+		Vector3? target;
+
 		private KeyCode[] desiredKeys = 
 			{ KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow };
-
-		private Vector3 velocity = Vector3.zero;
-		public float smoothTime = 0.3F;
-
 
 		private Dictionary<KeyCode, Vector3> keyDict = new Dictionary<KeyCode, Vector3> () {
 			{ KeyCode.LeftArrow, Vector3.left },
@@ -25,61 +26,39 @@ namespace Maze
 		};
 
 
-		GameObject player;
-
 		void Awake ()
 		{
-			Debug.Log ("Hello");
+			player = GameObject.FindGameObjectWithTag ("Player");
+//			GameObject arrowUIButton = (GameObject)GameObject.Instantiate (buttonPrefab);
+//			arrowUIButton;
 		}
 			
 		// Use this for initialization
 		void Start ()
 		{
 
-			StartCoroutine (Example ());
+			StartCoroutine (waitForUserInput ());
 			print ("Started coroutine");
 			StartRecording ();
 		}
 
 
-		IEnumerator Example ()
+		IEnumerator waitForUserInput ()
 		{
-//			print (Time.time);
-			yield return new WaitForSecondsRealtime (10);
-//			print (Time.time);
+			yield return new WaitForSecondsRealtime (waitTime);
 
+			// Code below runs after "waitTime"
 			isListeningEvent = false;
 
-			print (string.Format (" Queue count = {0}", 
-				moves.Count));
-
-			player = GameObject.FindGameObjectWithTag ("Player");
+			print (string.Format (" Number of moves = {0}", moves.Count));
 
 			isDispatching = true;
-//			foreach (KeyCode k in moves) {
-//				print (string.Format ("Key in Queue {0}", k.ToString ()));
-//
-//				if (k == KeyCode.LeftArrow) {
-//					player.transform.Translate (Vector3.right);
-//				}
-//
-//				if (k == KeyCode.RightArrow) {
-//					player.transform.Translate (Vector3.left);
-//				}
-//				if (k == KeyCode.DownArrow) {
-//					player.transform.Translate (Vector3.forward);
-//				}
-//				if (k == KeyCode.UpArrow) {
-//					player.transform.Translate (Vector3.back);
-//				}
-//			}
 		}
+			
 
 		// Update is called once per frame
 		void Update ()
 		{
-//			print (string.Format ("isListening {0}", isListeningEvent));
-
 			if (isListeningEvent) {
 				foreach (KeyCode keyToCheck in desiredKeys) {
 					if (Input.GetKeyUp (keyToCheck)) {
@@ -89,19 +68,17 @@ namespace Maze
 					}				
 				}
 			}
-
-//			if (isDispatching) {
-//				while (moves.Count > 0) {
-//					Vector3 move = (Vector3)moves.Dequeue ();
-//
-//					player.transform.Translate (move);
-//
-//					// Current pos
-////					Vector3 currPos = player.transform.position;
-////					Vector3 targetPos = currPos + move;
-////					player.transform.position = targetPos;
-//				}
-//			}
+				
+			if (isDispatching && player) {
+				if (target == null && moves.Count > 0) {
+					target = player.transform.position + (Vector3)moves.Dequeue ();
+				}
+				if (target != null && target != player.transform.position) {
+					player.transform.position = Vector3.MoveTowards (player.transform.position, (Vector3)target, movespeed * Time.deltaTime);
+				} else {
+					target = null;
+				}
+			}
 		}
 
 		void StartRecording ()
@@ -109,7 +86,6 @@ namespace Maze
 			print ("Start Recording event");
 			isListeningEvent = true;
 			moves = new Queue ();
-
 		}
 	}
 
