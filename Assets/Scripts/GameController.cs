@@ -7,16 +7,15 @@ namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
-
 		public Image memorizeImg;
 		public Text timeText;
-		private static int waitTime = 2;
+		private int waitTime = 2;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
-		
-		float timeAmt = (float)waitTime;
-		float time;
+
+		float timeAmt = 2;
+	 	float time;
 
 		MoveController mc;
 		GameObject player;
@@ -31,19 +30,6 @@ namespace Maze
 			{ KeyCode.DownArrow, Vector3.back },
 			{ KeyCode.UpArrow, Vector3.forward }
 		};
-
-		public void Transmit ()
-		{
-			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
-
-			isListeningEvent = false;
-			isDispatching = true;
-		}
-
-		public void ResetMoves ()
-		{
-			mc.RemoveAllMoves ();
-		}
 
 
 		void Awake ()
@@ -71,10 +57,24 @@ namespace Maze
 
 			// Cover the maze while user presses arrow keys 
 
-			// Hide Countdown image and counter
 
-			// Starts listening to keyboard commands
-			isListeningEvent = true;
+			// Code below runs after "waitTime"
+
+			StartRecording ();
+
+
+			yield return new WaitForSecondsRealtime (5);
+
+			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
+
+			isListeningEvent = false;
+			isDispatching = true;
+
+
+			// Removes all moves in the queue
+			mc.RemoveAllMoves ();
+
+
 		}
 			
 
@@ -82,19 +82,22 @@ namespace Maze
 		void Update ()
 		{
 			if (time > 0) {
-				time -= Time.deltaTime;
-				memorizeImg.fillAmount = time / timeAmt;
-				timeText.text = time.ToString ("F");
-			} else {
-				memorizeImg.enabled = false;
-				timeText.enabled = false;
-			}
+					 time -= Time.deltaTime;
+					 memorizeImg.fillAmount = time / timeAmt;
+					 timeText.text = time.ToString("F");
+					 print("I was called");
+			} else
+      {
+          memorizeImg.enabled = false;
+          timeText.enabled = false;
+      }
 						
 			if (isListeningEvent) {
 				foreach (KeyCode keyToCheck in desiredKeys) {
 					if (Input.GetKeyUp (keyToCheck)) {
 						print (string.Format ("Key Clicked {0}", keyToCheck.ToString ()));
 						Vector3 moveVector = keyDict [keyToCheck];
+//						moves.Enqueue (moveVector);
 						mc.AddMove (moveVector);
 					}				
 				}
@@ -113,5 +116,12 @@ namespace Maze
 				}
 			}
 		}
+
+		void StartRecording ()
+		{
+			print ("Start Recording event");
+			isListeningEvent = true;
+		}
 	}
+
 }
