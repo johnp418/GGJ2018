@@ -11,25 +11,14 @@ namespace Maze
 		public GameController gameController;
 		public Button resetBtn;
 		public Button transmitBtn;
-        public Button tryagainBtn;
+		public Button tryagainBtn;
 
-        // Use this for initialization
-        void Start ()
+		// Use this for initialization
+		void Start ()
 		{
 			resetBtn.onClick.AddListener (ResetClick);
 			transmitBtn.onClick.AddListener (TransmitClick);
-            tryagainBtn.onClick.AddListener(TryAgainClick);
-        }
-
-		// Update is called once per frame
-		void Update ()
-		{
-
-		}
-
-		void TaskOnClick ()
-		{
-			Debug.Log ("You have clicked the button!");
+			tryagainBtn.onClick.AddListener (TryAgainClick);
 		}
 
 		private void ResetClick ()
@@ -43,10 +32,10 @@ namespace Maze
 
 		}
 
-        private void TryAgainClick ()
-        {
-            gameController.TryAgain ();
-        }
+		private void TryAgainClick ()
+		{
+			gameController.TryAgain ();
+		}
 
 	}
 

@@ -12,7 +12,7 @@ namespace Maze
 		public GameOverManager go;
 		public Image memorizeImg;
 		public Text timeText;
-		public int waitTime = 5;
+		public int waitTime = 30;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
@@ -23,6 +23,7 @@ namespace Maze
 		MoveController mc;
 		GameObject player;
 		Vector3? target;
+		Vector3 lastMove = Vector3.forward;
 
 		private KeyCode[] desiredKeys = 
 			{ KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow };
@@ -54,19 +55,16 @@ namespace Maze
 		{
 			SceneManager.LoadScene ("Maze1");
 		}
-
-		void Awake ()
-		{
-			player = GameObject.FindGameObjectWithTag ("Player");
-			GameObject moveList = GameObject.FindGameObjectWithTag ("MoveList");
-			mc = moveList.GetComponent<MoveController> ();
-
-		}
 			
 		// Use this for initialization
 		void Start ()
 		{
 			time = (float)waitTime;
+			player = GameObject.FindGameObjectWithTag ("Player");
+			GameObject moveList = GameObject.FindGameObjectWithTag ("MoveList");
+
+			mc = moveList.GetComponent<MoveController> ();
+
 
 			// Hide cover when starting
 			cover.enabled = false;
@@ -114,8 +112,9 @@ namespace Maze
 			if (isDispatching && player) {
 				if (target == null && mc.GetItemCount () > 0) {
 
-					target = player.transform.position + mc.RemoveMove ();
-					// Rotate player based on direction
+					Vector3 nextMove = mc.RemoveMove ();
+
+					target = player.transform.position + nextMove;
 
 				}
 				if (target != null && target != player.transform.position) {

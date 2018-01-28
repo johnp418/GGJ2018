@@ -7,15 +7,8 @@ namespace Maze
 {
 	public class UserMove : MonoBehaviour
 	{
-
 		public Image moveImage;
 		public Text moveText;
-
-		// Use this for initialization
-		void Start ()
-		{
-
-		}
 
 		public void Setup (Vector3 vec, MoveController panel)
 		{

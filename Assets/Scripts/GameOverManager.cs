@@ -17,12 +17,6 @@ namespace Maze
 			gameOver.enabled = false;
 		}
 
-		// Update is called once per frame
-		void Update ()
-		{
-
-		}
-
 		public void GameOver ()
 		{
 			gameOver.enabled = true;
