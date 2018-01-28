@@ -15,7 +15,7 @@ namespace Maze
 		private bool isDispatching = false;
 		
 		float timeAmt = 10;
-	 	float time;
+		float time;
 
 		MoveController mc;
 		GameObject player;
@@ -63,7 +63,7 @@ namespace Maze
 			StartRecording ();
 
 
-			yield return new WaitForSecondsRealtime (5);
+			yield return new WaitForSecondsRealtime (30);
 
 			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
 
@@ -82,15 +82,14 @@ namespace Maze
 		void Update ()
 		{
 			if (time > 0) {
-					 time -= Time.deltaTime;
-					 memorizeImg.fillAmount = time / timeAmt;
-					 timeText.text = time.ToString("F");
-					 print("I was called");
-			} else
-      {
-          memorizeImg.enabled = false;
-          timeText.enabled = false;
-      }
+				time -= Time.deltaTime;
+				memorizeImg.fillAmount = time / timeAmt;
+				timeText.text = time.ToString ("F");
+				print ("I was called");
+			} else {
+				memorizeImg.enabled = false;
+				timeText.enabled = false;
+			}
 						
 			if (isListeningEvent) {
 				foreach (KeyCode keyToCheck in desiredKeys) {
