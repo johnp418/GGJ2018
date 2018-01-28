@@ -8,8 +8,9 @@ Maze Runner
 A game developed using Unity (video game engine) for Global Game Jam (Vancouver) 2018.
 
 ## Screenshot
-![alt text](https://github.com/johnp418/GGJ2018/tree/master/Assets/Images/Screen Shot 2018-01-28 at 2.02.09 PM.png "Maze Runner")
-![alt text](https://github.com/johnp418/GGJ2018/tree/master/Assets/Images/Screen Shot 2018-01-28 at 2.02.09 PM.png "Maze Runner")
+![alt text](https://github.com/johnp418/GGJ2018/blob/master/Assets/Images/Screen%20Shot%202018-01-28%20at%202.02.09%20PM.png "Maze Runner")
+
+![alt text](https://github.com/johnp418/GGJ2018/blob/master/Assets/Images/Screen%20Shot%202018-01-28%20at%202.02.35%20PM.png "Maze Runner")
 
 ## Setup
 ```
