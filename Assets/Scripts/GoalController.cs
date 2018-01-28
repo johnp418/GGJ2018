@@ -24,7 +24,9 @@ public class GoalController : MonoBehaviour
 		if (col.gameObject.CompareTag ("Player")) {
 			// Show win message 
 			print (" You won !, loading next level");
-			SceneManager.LoadScene ("Maze2");
+//			SceneManager.LoadScene ("Maze2");
+
+			Application.Quit ();
 		}
 	}
 }
