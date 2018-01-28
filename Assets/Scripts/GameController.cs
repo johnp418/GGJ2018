@@ -7,15 +7,16 @@ namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
+		public Renderer cover;
 		public Image memorizeImg;
 		public Text timeText;
-		private int waitTime = 2;
+		private static int waitTime = 2;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
-
-		float timeAmt = 2;
-	 	float time;
+		
+		float timeAmt = (float)waitTime;
+		float time;
 
 		MoveController mc;
 		GameObject player;
@@ -31,22 +32,45 @@ namespace Maze
 			{ KeyCode.UpArrow, Vector3.forward }
 		};
 
+		public void Transmit ()
+		{
+			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
+
+			isListeningEvent = false;
+			isDispatching = true;
+		}
+
+		public void ResetMoves ()
+		{
+			mc.RemoveAllMoves ();
+		}
+
 
 		void Awake ()
 		{
 			player = GameObject.FindGameObjectWithTag ("Player");
 			GameObject moveList = GameObject.FindGameObjectWithTag ("MoveList");
 			mc = moveList.GetComponent<MoveController> ();
-			print ("MC");
-			print (mc);
+
 		}
 			
 		// Use this for initialization
 		void Start ()
 		{
 			time = timeAmt;
+//			cover = GetComponent<MeshRenderer> ();
+//			Renderer coverRenderer = cover.gameObject.GetComponent<Renderer> ();
+//			coverRenderer.enabled = false;
+
+			print ("Cover ?");
+			print (cover);
+
+//			cover.GetComponent<Renderer> ().enabled = false;
+
+			// Hide cover when starting
+			cover.enabled = false;
+
 			StartCoroutine (waitForUserInput ());
-			print ("Started coroutine");
 		}
 
 
@@ -55,26 +79,14 @@ namespace Maze
 			// Let user remember the layout of the maze for "waitTime"
 			yield return new WaitForSecondsRealtime (waitTime);
 
-			// Cover the maze while user presses arrow keys 
+			// Cover the maze
+			cover.enabled = true;	
 
+			// Hide Countdown image and counter?
+		
 
-			// Code below runs after "waitTime"
-
-			StartRecording ();
-
-
-			yield return new WaitForSecondsRealtime (5);
-
-			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
-
-			isListeningEvent = false;
-			isDispatching = true;
-
-
-			// Removes all moves in the queue
-			mc.RemoveAllMoves ();
-
-
+			// Starts listening to keyboard commands
+			isListeningEvent = true;
 		}
 			
 
@@ -82,22 +94,19 @@ namespace Maze
 		void Update ()
 		{
 			if (time > 0) {
-					 time -= Time.deltaTime;
-					 memorizeImg.fillAmount = time / timeAmt;
-					 timeText.text = time.ToString("F");
-					 print("I was called");
-			} else
-      {
-          memorizeImg.enabled = false;
-          timeText.enabled = false;
-      }
+				time -= Time.deltaTime;
+				memorizeImg.fillAmount = time / timeAmt;
+				timeText.text = time.ToString ("F");
+			} else {
+				memorizeImg.enabled = false;
+				timeText.enabled = false;
+			}
 						
 			if (isListeningEvent) {
 				foreach (KeyCode keyToCheck in desiredKeys) {
 					if (Input.GetKeyUp (keyToCheck)) {
 						print (string.Format ("Key Clicked {0}", keyToCheck.ToString ()));
 						Vector3 moveVector = keyDict [keyToCheck];
-//						moves.Enqueue (moveVector);
 						mc.AddMove (moveVector);
 					}				
 				}
@@ -105,23 +114,28 @@ namespace Maze
 				
 			if (isDispatching && player) {
 				if (target == null && mc.GetItemCount () > 0) {
+
+
+
 					target = player.transform.position + mc.RemoveMove ();
+					// Rotate player based on direction
+
 				}
 				if (target != null && target != player.transform.position) {
 //					playC.anim.SetInteger ("Speed", 2);
 					PlayerController a = player.GetComponent<PlayerController> ();
+
+
 					player.transform.position = Vector3.MoveTowards (player.transform.position, (Vector3)target, movespeed * Time.deltaTime);
 				} else {
 					target = null;
 				}
+
+				// Game over condition
+				if (mc.GetItemCount () == 0) {
+					
+				}
 			}
 		}
-
-		void StartRecording ()
-		{
-			print ("Start Recording event");
-			isListeningEvent = true;
-		}
 	}
-
 }

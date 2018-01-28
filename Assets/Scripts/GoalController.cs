@@ -20,6 +20,7 @@ public class GoalController : MonoBehaviour
 
 	void OnTriggerEnter (Collider col)
 	{
+		print (" On Trigger GOal ");
 		if (col.gameObject.CompareTag ("Player")) {
 			// Show win message 
 			print (" You won !, loading next level");
