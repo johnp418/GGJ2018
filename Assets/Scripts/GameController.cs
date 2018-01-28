@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Maze
 {
@@ -45,6 +46,10 @@ namespace Maze
 			mc.RemoveAllMoves ();
 		}
 
+		public void TryAgain ()
+		{
+			SceneManager.LoadScene ("Maze MJ");
+		}
 
 		void Awake ()
 		{
