@@ -6,7 +6,7 @@ namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
-		private int waitTime = 10;
+		private int waitTime = 3;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
