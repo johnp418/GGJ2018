@@ -8,10 +8,10 @@ namespace Maze
 	{
 		private int waitTime = 10;
 		private float movespeed = 5;
-		private Queue moves = null;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
 
+		MoveController mc;
 		GameObject player;
 		Vector3? target;
 
@@ -29,8 +29,10 @@ namespace Maze
 		void Awake ()
 		{
 			player = GameObject.FindGameObjectWithTag ("Player");
-//			GameObject arrowUIButton = (GameObject)GameObject.Instantiate (buttonPrefab);
-//			arrowUIButton;
+			GameObject moveList = GameObject.FindGameObjectWithTag ("MoveList");
+			mc = moveList.GetComponent<MoveController> ();
+			print ("MC");
+			print (mc);
 		}
 			
 		// Use this for initialization
@@ -57,14 +59,14 @@ namespace Maze
 
 			yield return new WaitForSecondsRealtime (5);
 
-			print (string.Format (" Number of moves = {0}", moves.Count));
+			print (string.Format (" Number of moves = {0}", mc.GetItemCount ()));
 
 			isListeningEvent = false;
 			isDispatching = true;
 
 
-			print (" Hello Start ");
-
+			// Removes all moves in the queue
+			mc.RemoveAllMoves ();
 
 
 		}
@@ -78,14 +80,15 @@ namespace Maze
 					if (Input.GetKeyUp (keyToCheck)) {
 						print (string.Format ("Key Clicked {0}", keyToCheck.ToString ()));
 						Vector3 moveVector = keyDict [keyToCheck];
-						moves.Enqueue (moveVector);
+//						moves.Enqueue (moveVector);
+						mc.AddMove (moveVector);
 					}				
 				}
 			}
 				
 			if (isDispatching && player) {
-				if (target == null && moves.Count > 0) {
-					target = player.transform.position + (Vector3)moves.Dequeue ();
+				if (target == null && mc.GetItemCount () > 0) {
+					target = player.transform.position + mc.RemoveMove ();
 				}
 				if (target != null && target != player.transform.position) {
 					player.transform.position = Vector3.MoveTowards (player.transform.position, (Vector3)target, movespeed * Time.deltaTime);
@@ -99,7 +102,6 @@ namespace Maze
 		{
 			print ("Start Recording event");
 			isListeningEvent = true;
-			moves = new Queue ();
 		}
 	}
 
