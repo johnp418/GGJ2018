@@ -13,19 +13,23 @@ public class CameraAngleChanges : MonoBehaviour {
 	//		mainCam.transform.eulerAngles = new Vector3 (20f, 0f, 0f);
 	//	}
 
-	void Start() {
-
+//	void Start() {
+//		currentView = views[0];
+//		currentView = views[1];
+//		currentView = views[2];
+//		currentView = views[3];
+//		currentView = views[4];
+//		currentView = views[5];
+//		currentView = views[6];
+//		currentView = views[7];
+//	}
+	IEnumerator Start()
+	{
+		currentView = views[0];
+		yield return new WaitForSeconds(0.5f);
+		currentView = views[1];
 	}
 
-	void Update() {
-		if (Input.GetKey (KeyCode.Alpha2)) {
-			currentView = views[1];
-		}	
-		if (Input.GetKey (KeyCode.Alpha1)) {
-			currentView = views[0];
-		}
-	}
-	//
 	void LateUpdate() {
 		if (currentView != null) {
 			transform.position = Vector3.Lerp (transform.position, currentView.position, Time.deltaTime * transitionSpeed);
