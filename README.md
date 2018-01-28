@@ -2,7 +2,7 @@
 Global Game Jam (Vancouver) 2018
 
 ## Project Name
-Maze Runner
+[Maze Runner] (https://globalgamejam.org/2018/games/mazerunner)
 
 ## Description
 A game developed using Unity (video game engine) for Global Game Jam (Vancouver) 2018.
