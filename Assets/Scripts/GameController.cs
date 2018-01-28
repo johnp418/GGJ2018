@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Maze
 {
 	public class GameController : MonoBehaviour
 	{
-		private int waitTime = 3;
+		public Image memorizeImg;
+		public Text timeText;
+		private int waitTime = 10;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
+		
+		float timeAmt = 10;
+	 	float time;
 
 		MoveController mc;
 		GameObject player;
@@ -38,7 +44,7 @@ namespace Maze
 		// Use this for initialization
 		void Start ()
 		{
-
+			time = timeAmt;
 			StartCoroutine (waitForUserInput ());
 			print ("Started coroutine");
 		}
@@ -75,6 +81,17 @@ namespace Maze
 		// Update is called once per frame
 		void Update ()
 		{
+			if (time > 0) {
+					 time -= Time.deltaTime;
+					 memorizeImg.fillAmount = time / timeAmt;
+					 timeText.text = time.ToString("F");
+					 print("I was called");
+			} else
+      {
+          memorizeImg.enabled = false;
+          timeText.enabled = false;
+      }
+						
 			if (isListeningEvent) {
 				foreach (KeyCode keyToCheck in desiredKeys) {
 					if (Input.GetKeyUp (keyToCheck)) {
