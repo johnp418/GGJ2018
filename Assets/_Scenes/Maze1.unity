@@ -1077,7 +1077,10 @@ Behaviour:
   m_GameObject: {fileID: 464472248}
   m_Enabled: 1
 --- !u!20 &464472251
-C`: {fileID: 0}
+-Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 464472248}
   m_Enabled: 1
   serializedVersion: 2
