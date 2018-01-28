@@ -9,12 +9,12 @@ namespace Maze
 	{
 		public Image memorizeImg;
 		public Text timeText;
-		private int waitTime = 10;
+		private int waitTime = 2;
 		private float movespeed = 5;
 		private bool isListeningEvent = false;
 		private bool isDispatching = false;
 		
-		float timeAmt = 10;
+		float timeAmt = 2;
 	 	float time;
 
 		MoveController mc;
@@ -108,6 +108,8 @@ namespace Maze
 					target = player.transform.position + mc.RemoveMove ();
 				}
 				if (target != null && target != player.transform.position) {
+//					playC.anim.SetInteger ("Speed", 2);
+					PlayerController a = player.GetComponent<PlayerController> ();
 					player.transform.position = Vector3.MoveTowards (player.transform.position, (Vector3)target, movespeed * Time.deltaTime);
 				} else {
 					target = null;

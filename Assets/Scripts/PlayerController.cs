@@ -6,6 +6,7 @@ namespace Maze
 {
 	public class PlayerController : MonoBehaviour
 	{
+		public Animator anim;
 		public float speed;
 		private Rigidbody rb;
 
@@ -15,6 +16,7 @@ namespace Maze
 		{
 			rb = GetComponent<Rigidbody> ();
 //			playerTransform = transform;
+			anim = this.gameObject.GetComponent<Animator> ();
 		}
 
 		void FixedUpdate ()
